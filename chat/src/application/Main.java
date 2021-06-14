@@ -18,54 +18,54 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-
+// test
 public class Main extends Application {
 	
-	// ½º·¹µå Ç® »ç¿ë(ÇÑÁ¤µÈ ÀÚ¿øÀ¸·Î ¾ÈÁ¤ÀûÀÌ°Ô ¼­¹ö¸¦ ¿î¿ëÇÏ±â À§ÇØ¼­ threadPool ±â¹ıÀ» »ç¿ë)
+	// ìŠ¤ë ˆë“œ í’€ ì‚¬ìš©(í•œì •ëœ ìì›ìœ¼ë¡œ ì•ˆì •ì ì´ê²Œ ì„œë²„ë¥¼ ìš´ìš©í•˜ê¸° ìœ„í•´ì„œ threadPool ê¸°ë²•ì„ ì‚¬ìš©)
 	public static ExecutorService threadPool;
 	
-	// Á¢¼ÓÇÒ Å¬¶óÀÌ¾ğÆ®µéÀ» °ü¸® ÇÒ ¼ö ÀÖµµ·Ï ¸¸µë.
+	// ì ‘ì†í•  í´ë¼ì´ì–¸íŠ¸ë“¤ì„ ê´€ë¦¬ í•  ìˆ˜ ìˆë„ë¡ ë§Œë“¬.
 	public static Vector<Client> clients = new Vector<>();
 	
-	// ¼­¹ö ¼ÒÄÏ »ı¼º
+	// ì„œë²„ ì†Œì¼“ ìƒì„±
 	ServerSocket serverSocket;
 	
-	// ¼­¹ö¸¦ ±¸µ¿½ÃÄÑ Å¬¶óÀÌ¾ğÆ®ÀÇ ¿¬°áÀ» ±â´Ù¸®´Â ¸Ş¼Òµå
+	// ì„œë²„ë¥¼ êµ¬ë™ì‹œì¼œ í´ë¼ì´ì–¸íŠ¸ì˜ ì—°ê²°ì„ ê¸°ë‹¤ë¦¬ëŠ” ë©”ì†Œë“œ
 	public void startServer(String IP, int port) {
 		
 		try {
 			serverSocket = new ServerSocket();
 			
-			// Æ¯Á¤ÇÑ ip¹øÈ£¿Í port¹øÈ£·Î Æ¯Á¤ÇÑ Å¬¶óÀÌ¾ğÆ®¿¡°Ô Á¢¼ÓÀ» ±â´Ù¸®°Ô ÇØÁÜ
+			// íŠ¹ì •í•œ ipë²ˆí˜¸ì™€ portë²ˆí˜¸ë¡œ íŠ¹ì •í•œ í´ë¼ì´ì–¸íŠ¸ì—ê²Œ ì ‘ì†ì„ ê¸°ë‹¤ë¦¬ê²Œ í•´ì¤Œ
 			serverSocket.bind(new InetSocketAddress(IP, port));
 		} catch (Exception e) {
 			e.printStackTrace();
 			
-			// ¼­¹ö ¼ÒÄÏÀÌ ´İÇôÀÖ´Â °æ¿ì°¡ ¾Æ´Ï¶ó¸é
+			// ì„œë²„ ì†Œì¼“ì´ ë‹«í˜€ìˆëŠ” ê²½ìš°ê°€ ì•„ë‹ˆë¼ë©´
 			if(!serverSocket.isClosed()) {
-				stopServer(); // ¼­¹ö¸¦ Á¾·á
+				stopServer(); // ì„œë²„ë¥¼ ì¢…ë£Œ
 			}
 			
 			return;
 		}
 		
-		// Å¬¶óÀÌ¾ğÆ®°¡ Á¢¼ÓÇÒ ¶§ ±îÁö °è¼Ó ±â´Ù¸®´Â ½º·¹µå
+		// í´ë¼ì´ì–¸íŠ¸ê°€ ì ‘ì†í•  ë•Œ ê¹Œì§€ ê³„ì† ê¸°ë‹¤ë¦¬ëŠ” ìŠ¤ë ˆë“œ
 		Runnable thread = new Runnable() {
 			
 			@Override
 			public void run() {
-				// °è¼ÓÇØ¼­ »õ·Î¿î Å¬¶óÀÌ¾ğÆ®°¡ Á¢¼Ó ÇÒ ¼ö ÀÖµµ·Ï ÇØÁÜ
+				// ê³„ì†í•´ì„œ ìƒˆë¡œìš´ í´ë¼ì´ì–¸íŠ¸ê°€ ì ‘ì† í•  ìˆ˜ ìˆë„ë¡ í•´ì¤Œ
 				while(true) {
 					try {
 						Socket socket = serverSocket.accept();
 						clients.add(new Client(socket));
 						
-						System.out.println(" [Å¬¶óÀÌ¾ğÆ® Á¢¼Ó]"
+						System.out.println(" [í´ë¼ì´ì–¸íŠ¸ ì ‘ì†]"
 											+ socket.getRemoteSocketAddress()
 											+ " : "
 											+ Thread.currentThread().getName());
 					} catch (Exception e) {
-						// ¼­¹ö ¼ÒÄÏ¿¡ ¹®Á¦°¡ »ı±ä°Å´Ï ¼­¹ö¸¦ Á¾·á ½ÃÅ°°í break¹®À» È°¿ëÇØ¼­ ºüÁ® ³ª°¨
+						// ì„œë²„ ì†Œì¼“ì— ë¬¸ì œê°€ ìƒê¸´ê±°ë‹ˆ ì„œë²„ë¥¼ ì¢…ë£Œ ì‹œí‚¤ê³  breakë¬¸ì„ í™œìš©í•´ì„œ ë¹ ì ¸ ë‚˜ê°
 						
 						if(!serverSocket.isClosed()) {
 							stopServer();
@@ -76,34 +76,34 @@ public class Main extends Application {
 			}
 		};
 		
-		// ½º·¹µå Ç®À» ÃÊ±âÈ­
+		// ìŠ¤ë ˆë“œ í’€ì„ ì´ˆê¸°í™”
 		threadPool = Executors.newCachedThreadPool();
 		
-		// Å¬¶óÀÌ¾ğÆ®¿¡ Á¢¼ÓÀ» ¿øÇÏ´À ½º·¹µå¸¦ ³Ö¾îÁÜ
+		// í´ë¼ì´ì–¸íŠ¸ì— ì ‘ì†ì„ ì›í•˜ëŠ ìŠ¤ë ˆë“œë¥¼ ë„£ì–´ì¤Œ
 		threadPool.submit(thread);
 		
 	}
 	
-	// ¼­¹öÀÇ ÀÛµ¿À» ÁßÁö½ÃÄÑÁÖ´Â ¸Ş¼Òµå
+	// ì„œë²„ì˜ ì‘ë™ì„ ì¤‘ì§€ì‹œì¼œì£¼ëŠ” ë©”ì†Œë“œ
 	public void stopServer() {
 		
 		try {
-			// ÇöÀç ÀÛ¾÷ÁßÀÎ ¸ğµç ¼ÒÄÏ ´İ±â
+			// í˜„ì¬ ì‘ì—…ì¤‘ì¸ ëª¨ë“  ì†Œì¼“ ë‹«ê¸°
 			Iterator<Client> iterator = clients.iterator();
 			
-			// ÇÑ¸í ÇÑ¸íÀÇ Å¬¶óÀÌ¾ğÆ®¿¡°Ô Á¢±Ù
+			// í•œëª… í•œëª…ì˜ í´ë¼ì´ì–¸íŠ¸ì—ê²Œ ì ‘ê·¼
 			while(iterator.hasNext()) {
 				Client client = iterator.next();
 				client.socket.close();
 				iterator.remove();
 			}
 			
-			// ¼­¹ö ¼ÒÄÏ °´Ã¼ ´İ±â
+			// ì„œë²„ ì†Œì¼“ ê°ì²´ ë‹«ê¸°
 			if(serverSocket != null && !serverSocket.isClosed()) {
 				serverSocket.close();
 			}
 			
-			// ½º·¹µåÇ® Á¾·á
+			// ìŠ¤ë ˆë“œí’€ ì¢…ë£Œ
 			if(threadPool != null && !threadPool.isShutdown()) {
 				threadPool.shutdown();
 			}
@@ -112,60 +112,60 @@ public class Main extends Application {
 		}
 	}
 	
-	// UI¸¦ »ı¼ºÇÏ°í, ½ÇÁúÀûÀ¸·Î ÇÁ·Î±×·¥À» µ¿ÀÛ½ÃÅ°´Â ¸Ş¼­µå
+	// UIë¥¼ ìƒì„±í•˜ê³ , ì‹¤ì§ˆì ìœ¼ë¡œ í”„ë¡œê·¸ë¨ì„ ë™ì‘ì‹œí‚¤ëŠ” ë©”ì„œë“œ
 	@Override
 	public void start(Stage primaryStage) {
-		// ÇÏ³ªÀÇ ÀüÃ¼ µğÀÚÀÎ Æ²À» ´ãÀ» ¼ö ÀÖ´Â ÇÏ³ªÀÇ ÆĞ³ÎÀ» »ı¼º
+		// í•˜ë‚˜ì˜ ì „ì²´ ë””ìì¸ í‹€ì„ ë‹´ì„ ìˆ˜ ìˆëŠ” í•˜ë‚˜ì˜ íŒ¨ë„ì„ ìƒì„±
 		BorderPane root = new BorderPane();
 		
-		// ³»ºÎ Æäµù 5
+		// ë‚´ë¶€ í˜ë”© 5
 		root.setPadding(new Insets(5));
 		
 		TextArea textArea = new TextArea();
 		textArea.setEditable(false);
-		textArea.setFont(new Font("³ª´®°íµñ", 15));
+		textArea.setFont(new Font("ë‚˜ëˆ”ê³ ë”•", 15));
 		
 		root.setCenter(textArea);
 		
-		// Åä±Û ¹öÆ°Àº ½ºÀ§Ä¡¶ó°í »ı°¢ÇÏ¸é µÊ
-		Button toggleButton = new Button("½ÃÀÛÇÏ±â");
+		// í† ê¸€ ë²„íŠ¼ì€ ìŠ¤ìœ„ì¹˜ë¼ê³  ìƒê°í•˜ë©´ ë¨
+		Button toggleButton = new Button("ì‹œì‘í•˜ê¸°");
 		toggleButton.setMaxWidth(Double.MAX_VALUE);
 		BorderPane.setMargin(toggleButton, new Insets(1, 0, 0, 0));
 		root.setBottom(toggleButton);
 		
-		// ÀÚ½ÅÀÇ ·ÎÄÃ ¼­¹ö
+		// ìì‹ ì˜ ë¡œì»¬ ì„œë²„
 		String IP = "127.0.0.1";
 		int port = 9876;
 		
 		toggleButton.setOnAction(event -> {
-			if(toggleButton.getText().equals("½ÃÀÛÇÏ±â")) {
+			if(toggleButton.getText().equals("ì‹œì‘í•˜ê¸°")) {
 				startServer(IP, port);
 				
-				// ÀÚ¹Ù fx°°Àº °æ¿ì´Â ¹Ù·Î textArea¿¡ ¾²¸é ¾ÈµÇ°í runLator¿Í °°Àº ÇÔ¼ö¸¦ ÀÌ¿ëÇÏ¿© ¾î¶°ÇÑ gui¿ä¼Ò¸¦ Ãâ·ÂÇÒ ¼ö ÀÖµµ·Ï ÇØ¾ßÇÔ.
+				// ìë°” fxê°™ì€ ê²½ìš°ëŠ” ë°”ë¡œ textAreaì— ì“°ë©´ ì•ˆë˜ê³  runLatorì™€ ê°™ì€ í•¨ìˆ˜ë¥¼ ì´ìš©í•˜ì—¬ ì–´ë– í•œ guiìš”ì†Œë¥¼ ì¶œë ¥í•  ìˆ˜ ìˆë„ë¡ í•´ì•¼í•¨.
 				Platform.runLater(() -> {
-					String message = String.format("[¼­¹ö ½ÃÀÛ]\n", IP, port);
+					String message = String.format("[ì„œë²„ ì‹œì‘]\n", IP, port);
 					textArea.appendText(message);
-					toggleButton.setText("Á¾·áÇÏ±â");
+					toggleButton.setText("ì¢…ë£Œí•˜ê¸°");
 				});
 			} else {
 				stopServer();
 				Platform.runLater(() -> {
-					String message = String.format("[¼­¹ö Á¾·á]\n", IP, port);
+					String message = String.format("[ì„œë²„ ì¢…ë£Œ]\n", IP, port);
 					textArea.appendText(message);
-					toggleButton.setText("½ÃÀÛÇÏ±â");
+					toggleButton.setText("ì‹œì‘í•˜ê¸°");
 				});
 			}
 		});
 		
-		// Å©±â
+		// í¬ê¸°
 		Scene scene = new Scene(root, 500, 500);
-		primaryStage.setTitle("[ Ã¤ÆÃ ¼­¹ö ]");
+		primaryStage.setTitle("[ ì±„íŒ… ì„œë²„ ]");
 		primaryStage.setOnCloseRequest(event -> stopServer());
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
 	
-	// ÇÁ·Î±×·¥ÀÇ ¸ŞÀÎ ¸Ş¼­µå
+	// í”„ë¡œê·¸ë¨ì˜ ë©”ì¸ ë©”ì„œë“œ
 	public static void main(String[] args) {
 		launch(args);
 	}
