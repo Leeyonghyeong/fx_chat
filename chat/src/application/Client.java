@@ -4,26 +4,26 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-
-// ÇÑ¸íÀÇ Å¬¶óÀÌ¾ğÆ®¿Í Åë½ÅÇÏ°Ô ÇØÁÖ´Â Å¬·¡½º
+// test
+// í•œëª…ì˜ í´ë¼ì´ì–¸íŠ¸ì™€ í†µì‹ í•˜ê²Œ í•´ì£¼ëŠ” í´ë˜ìŠ¤
 public class Client {
 	
-	// ¼ÒÄÏÀÌ ÀÖ¾î¾ßÁö Å¬¶óÀÌ¾ğÆ®¿Í ³×Æ®¿öÅ©»ó¿¡¼­ Åë½ÅÇÒ ¼ö ÀÖÀ½.
+	// ì†Œì¼“ì´ ìˆì–´ì•¼ì§€ í´ë¼ì´ì–¸íŠ¸ì™€ ë„¤íŠ¸ì›Œí¬ìƒì—ì„œ í†µì‹ í•  ìˆ˜ ìˆìŒ.
 	Socket socket;
 	
-	// »ı¼ºÀÚ »ı¼º
+	// ìƒì„±ì ìƒì„±
 	public Client(Socket socket) {
 		this.socket = socket;
 		
-		// ¹İº¹ÀûÀ¸·Î Å¬¶óÀÌ¾ğÆ®·ÎºÎÅÍ ¸Ş½ÃÁö¸¦ Àü´Ş¹ŞÀ» ¼ö ÀÖµµ·Ï receive() ÇÔ¼ö¸¦ ¸¸µë.
+		// ë°˜ë³µì ìœ¼ë¡œ í´ë¼ì´ì–¸íŠ¸ë¡œë¶€í„° ë©”ì‹œì§€ë¥¼ ì „ë‹¬ë°›ì„ ìˆ˜ ìˆë„ë¡ receive() í•¨ìˆ˜ë¥¼ ë§Œë“¬.
 		receive();
 	}
 	
-	// Å¬¶óÀÌ¾ğÆ®·ÎºÎÅÍ ¸Ş½ÃÁö¸¦ Àü´Ş¹Ş´Â ¸Ş¼Òµå
+	// í´ë¼ì´ì–¸íŠ¸ë¡œë¶€í„° ë©”ì‹œì§€ë¥¼ ì „ë‹¬ë°›ëŠ” ë©”ì†Œë“œ
 	public void receive() {
 		
-		// ÀÛ¾÷ »ı¼ºÀº Runnable ÀÎÅÍÆäÀÌ½º or Callable ÀÎÅÍÆäÀÌ½º¸¦ ±¸ÇöÇÑ Å¬·¡½º·Î ÀÛ¾÷¿äÃ»ÇÒ ÄÚµå¸¦ »ğÀÔÇØ ÀÛ¾÷À» ¸¸µé ¼ö ÀÖÀ½
-		// µÑÀÇ Â÷ÀÌÁ¡Àº RunnableÀÇ run() ¸Ş¼­µå´Â ¸®ÅÏ°ªÀÌ ¾ø°í, CallableÀÇ call() ¸Ş¼­µå´Â ¸®ÅÏ °ªÀÌ ÀÖÀ½
+		// ì‘ì—… ìƒì„±ì€ Runnable ì¸í„°í˜ì´ìŠ¤ or Callable ì¸í„°í˜ì´ìŠ¤ë¥¼ êµ¬í˜„í•œ í´ë˜ìŠ¤ë¡œ ì‘ì—…ìš”ì²­í•  ì½”ë“œë¥¼ ì‚½ì…í•´ ì‘ì—…ì„ ë§Œë“¤ ìˆ˜ ìˆìŒ
+		// ë‘˜ì˜ ì°¨ì´ì ì€ Runnableì˜ run() ë©”ì„œë“œëŠ” ë¦¬í„´ê°’ì´ ì—†ê³ , Callableì˜ call() ë©”ì„œë“œëŠ” ë¦¬í„´ ê°’ì´ ìˆìŒ
 		
 		Runnable thread = new Runnable() {
 			
@@ -31,28 +31,28 @@ public class Client {
 			public void run() {
 				
 				try {
-					// ¹İº¹ÀûÀ¸·Î Å¬¶óÀÌ¾ğÆ®¿¡°Ô ³»¿ëÀ» ¹ŞÀ» ¼ö ÀÖµµ·Ï while¹® »ı¼º
+					// ë°˜ë³µì ìœ¼ë¡œ í´ë¼ì´ì–¸íŠ¸ì—ê²Œ ë‚´ìš©ì„ ë°›ì„ ìˆ˜ ìˆë„ë¡ whileë¬¸ ìƒì„±
 					while(true) {
-						// ¾î¶² ³»¿ëÀ» Àü´Ş ¹ŞÀ» ¼ö ÀÖµµ·Ï InputStream °´Ã¼ »ç¿ë
+						// ì–´ë–¤ ë‚´ìš©ì„ ì „ë‹¬ ë°›ì„ ìˆ˜ ìˆë„ë¡ InputStream ê°ì²´ ì‚¬ìš©
 						InputStream is = socket.getInputStream();
 						
-						// ¹öÆÛ¸¦ »ç¿ëÇØ¼­ ÇÑ¹ø¿¡ 512byte±îÁö ¹ŞÀ» ¼ö ÀÖµµ·Ï ¼³Á¤
+						// ë²„í¼ë¥¼ ì‚¬ìš©í•´ì„œ í•œë²ˆì— 512byteê¹Œì§€ ë°›ì„ ìˆ˜ ìˆë„ë¡ ì„¤ì •
 						byte[] buffer = new byte[512];
 						
-						// ¸Ş¼¼ÁöÀÇ Å©±â
+						// ë©”ì„¸ì§€ì˜ í¬ê¸°
 						int length = is.read(buffer);
 						while(length == -1) throw new IOException();
 						
-						// ¼­¹ö¿¡ Á¢¼ÓÀ» ÇÑ Å¬¶óÀÌ¾ğÆ®ÀÇ ÁÖ¼ÒÁ¤º¸, ¾²·¹µåÀÇ ÀÌ¸§°ªÀ» Ãâ·Â
-						System.out.println("[¸Ş½ÃÁö ¼ö½Å ¼º°ø]"
+						// ì„œë²„ì— ì ‘ì†ì„ í•œ í´ë¼ì´ì–¸íŠ¸ì˜ ì£¼ì†Œì •ë³´, ì“°ë ˆë“œì˜ ì´ë¦„ê°’ì„ ì¶œë ¥
+						System.out.println("[ë©”ì‹œì§€ ìˆ˜ì‹  ì„±ê³µ]"
 											 + socket.getRemoteSocketAddress()
 											 + " : "
 											 + Thread.currentThread().getName());
 						
-						// Àü´Ş¹ŞÀº °ªÀ» ÇÑ±Ûµµ Æ÷ÇÔ ÇÒ ¼ö ÀÖµµ·Ï UTF-8 ¼³Á¤
+						// ì „ë‹¬ë°›ì€ ê°’ì„ í•œê¸€ë„ í¬í•¨ í•  ìˆ˜ ìˆë„ë¡ UTF-8 ì„¤ì •
 						String message = new String(buffer, 0, length, "UTF-8");
 						
-						// Àü´Ş¹ŞÀº ¸Ş½ÃÁö¸¦ ´Ù¸¥ Å¬¶óÀÌ¾ğÆ®µé¿¡°Ô º¸³¾ ¼ö ÀÖµµ·Ï ¸¸µé¾î ÁÜ
+						// ì „ë‹¬ë°›ì€ ë©”ì‹œì§€ë¥¼ ë‹¤ë¥¸ í´ë¼ì´ì–¸íŠ¸ë“¤ì—ê²Œ ë³´ë‚¼ ìˆ˜ ìˆë„ë¡ ë§Œë“¤ì–´ ì¤Œ
 						for(Client client : Main.clients) {
 							client.send(message);
 						}
@@ -60,7 +60,7 @@ public class Client {
 				} catch(Exception e) {
 
 					try {
-						System.out.println(" [¸Ş½ÃÁö ¼ö½Å ¿À·ù]" 
+						System.out.println(" [ë©”ì‹œì§€ ìˆ˜ì‹  ì˜¤ë¥˜]" 
 											+ socket.getRemoteSocketAddress()
 											+ " : "
 											+ Thread.currentThread().getName());
@@ -71,12 +71,12 @@ public class Client {
 			}
 		};
 		
-		// ¸ŞÀÎÇÔ¼ö¿¡ ÀÖ´Â ½º·¹µåÇ®¿¡ submitÀ» ÇØÁÜ
-		// Áï ½º·¹µåÇ®¿¡ ¸¸µé¾îÁø ÇÏ³ªÀÇ ½º·¹µå¸¦ µî·Ï
+		// ë©”ì¸í•¨ìˆ˜ì— ìˆëŠ” ìŠ¤ë ˆë“œí’€ì— submitì„ í•´ì¤Œ
+		// ì¦‰ ìŠ¤ë ˆë“œí’€ì— ë§Œë“¤ì–´ì§„ í•˜ë‚˜ì˜ ìŠ¤ë ˆë“œë¥¼ ë“±ë¡
 		Main.threadPool.submit(thread);
 	}
 	
-	// Å¬¶óÀÌ¾ğÆ®¿¡°Ô ¸Ş½ÃÁö¸¦ Àü¼ÛÇÏ´Â ¸Ş¼Òµå
+	// í´ë¼ì´ì–¸íŠ¸ì—ê²Œ ë©”ì‹œì§€ë¥¼ ì „ì†¡í•˜ëŠ” ë©”ì†Œë“œ
 	public void send(String message) {
 		
 		Runnable thread = new Runnable() {
@@ -88,7 +88,7 @@ public class Client {
 					
 					OutputStream os = socket.getOutputStream();
 					byte[] buffer = message.getBytes("UTF-8");
-					// ¹öÆÛ¿¡ ´ã±ä ³»¿ëÀ» ¼­¹ö¿¡¼­ Å¬¶óÀÌ¾ğÆ®¿¡°Ô Àü¼Û
+					// ë²„í¼ì— ë‹´ê¸´ ë‚´ìš©ì„ ì„œë²„ì—ì„œ í´ë¼ì´ì–¸íŠ¸ì—ê²Œ ì „ì†¡
 					os.write(buffer);
 					os.flush();
 					
@@ -96,7 +96,7 @@ public class Client {
 					
 					try {
 						
-						System.out.println("[¸Ş½ÃÁö ¼Û¼ö½Å ¿À·ù]" 
+						System.out.println("[ë©”ì‹œì§€ ì†¡ìˆ˜ì‹  ì˜¤ë¥˜]" 
 											+ socket.getRemoteSocketAddress()
 											+ " : "
 											+ Thread.currentThread().getName());
