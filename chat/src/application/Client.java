@@ -60,7 +60,7 @@ public class Client {
 				} catch(Exception e) {
 
 					try {
-						System.out.println(" [메시지 수진 오류]" 
+						System.out.println(" [메시지 수신 오류]" 
 											+ socket.getRemoteSocketAddress()
 											+ " : "
 											+ Thread.currentThread().getName());
