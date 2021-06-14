@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-// test
+
 // 한명의 클라이언트와 통신하게 해주는 클래스
 public class Client {
 	
