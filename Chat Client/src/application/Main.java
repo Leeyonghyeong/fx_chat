@@ -17,26 +17,26 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 
-
+// test
 public class Main extends Application {
 	
 	Socket socket;
 	TextArea textArea;
 	
-	// Å¬¶óÀÌ¾ğÆ® ÇÁ·Î±×·¥ µ¿ÀÛ ¸Ş¼Òµå (¾î¶² IP·Î, ¾î¶² port·Î Á¢¼ÓÇÒÁö Á¤ÇØÁÜ)
+	// í´ë¼ì´ì–¸íŠ¸ í”„ë¡œê·¸ë¨ ë™ì‘ ë©”ì†Œë“œ (ì–´ë–¤ IPë¡œ, ì–´ë–¤ portë¡œ ì ‘ì†í• ì§€ ì •í•´ì¤Œ)
 	public void startClient(String IP, int port) {
-		// ½º·¹µå °´Ã¤ »ı¼º
+		// ìŠ¤ë ˆë“œ ê°ì±„ ìƒì„±
 		Thread thread = new Thread() {
 			public void run() {
 				try {
-					// socket ÃÊ±âÈ­
+					// socket ì´ˆê¸°í™”
 					socket = new Socket(IP, port);
 					receive();
 				} catch (Exception e) {
-					// ¿À·ù°¡ »ı±ä´Ù¸é
+					// ì˜¤ë¥˜ê°€ ìƒê¸´ë‹¤ë©´
 					if(!socket.isClosed()) {
 						stopClient();
-						System.out.println("[ ¼­¹ö Á¢¼Ó ½ÇÆĞ ]");
+						System.out.println("[ ì„œë²„ ì ‘ì† ì‹¤íŒ¨ ]");
 						Platform.exit();
 					}
 				}
@@ -46,7 +46,7 @@ public class Main extends Application {
 		thread.start();
 	}
 	
-	// Å¬¶óÀÌ¾ğÆ® ÇÁ·Î±×·¥ Á¾·á ¸Ş¼Òµå
+	// í´ë¼ì´ì–¸íŠ¸ í”„ë¡œê·¸ë¨ ì¢…ë£Œ ë©”ì†Œë“œ
 	public void stopClient() {
 		try {
 			if(socket != null && !socket.isClosed()) {
@@ -57,12 +57,12 @@ public class Main extends Application {
 		}
 	}
 	
-	// ¼­¹ö·ÎºÎÅÍ ¸Ş½ÃÁö¸¦ Àü´Ş¹Ş´Â ¸Ş¼Òµå
+	// ì„œë²„ë¡œë¶€í„° ë©”ì‹œì§€ë¥¼ ì „ë‹¬ë°›ëŠ” ë©”ì†Œë“œ
 	public void receive() {
-		// ¼­¹ö ÇÁ·Î±×·¥À¸·ÎºÎÅÍ ¸Ş½ÃÁö¸¦ °è¼Ó Àü´Ş ¹ŞÀ» ¼ö ÀÖµµ·Ï
+		// ì„œë²„ í”„ë¡œê·¸ë¨ìœ¼ë¡œë¶€í„° ë©”ì‹œì§€ë¥¼ ê³„ì† ì „ë‹¬ ë°›ì„ ìˆ˜ ìˆë„ë¡
 		while(true) {
 			try {
-				// ¼­¹ö·ÎºÎÅÍ ¸Ş½ÃÁö¸¦ Àü´Ş ¹ŞÀ» ¼ö ÀÖµµ·Ï
+				// ì„œë²„ë¡œë¶€í„° ë©”ì‹œì§€ë¥¼ ì „ë‹¬ ë°›ì„ ìˆ˜ ìˆë„ë¡
 				InputStream is = socket.getInputStream();
 				byte[] buffer = new byte[512];
 				int length = is.read(buffer);
@@ -71,7 +71,7 @@ public class Main extends Application {
 				
 				String message = new String(buffer, 0, length, "UTF-8");
 				Platform.runLater(() -> {
-					// textArea´Â GUI¿ä¼ÒÁß ÇÏ³ª·Î È­¸é¿¡ ¾î¶²ÇÑ ¸Ş½ÃÁö¸¦ ÁÖ°í ¹Ş¾Ò´ÂÁö Ãâ·ÂÇØ ÁÖ´Â ¿ä¼Ò
+					// textAreaëŠ” GUIìš”ì†Œì¤‘ í•˜ë‚˜ë¡œ í™”ë©´ì— ì–´ë–¤í•œ ë©”ì‹œì§€ë¥¼ ì£¼ê³  ë°›ì•˜ëŠ”ì§€ ì¶œë ¥í•´ ì£¼ëŠ” ìš”ì†Œ
 					textArea.appendText(message);
 				});
 				
@@ -82,7 +82,7 @@ public class Main extends Application {
 		}
 	}
 	
-	// ¼­¹ö·Î ¸Ş½ÃÁö¸¦ Àü¼ÛÇÏ´Â ¸Ş¼Òµå
+	// ì„œë²„ë¡œ ë©”ì‹œì§€ë¥¼ ì „ì†¡í•˜ëŠ” ë©”ì†Œë“œ
 	public void send(String message) {
 		Thread thread = new Thread() {
 			public void run() {
@@ -100,7 +100,7 @@ public class Main extends Application {
 		thread.start();
 	}
 	
-	// ½ÇÁ¦·Î ÇÁ·Î±×·¥À» µ¿ÀÛ½ÃÅ°´Â ¸Ş¼­µå
+	// ì‹¤ì œë¡œ í”„ë¡œê·¸ë¨ì„ ë™ì‘ì‹œí‚¤ëŠ” ë©”ì„œë“œ
 	@Override
 	public void start(Stage primaryStage) {
 		
@@ -112,10 +112,10 @@ public class Main extends Application {
 		
 		TextField userName = new TextField();
 		userName.setPrefWidth(150);
-		userName.setPromptText("´Ğ³×ÀÓÀ» ÀÔ·ÂÇÏ¼¼¿ä.");
+		userName.setPromptText("ë‹‰ë„¤ì„ì„ ì…ë ¥í•˜ì„¸ìš”.");
 		HBox.setHgrow(userName, Priority.ALWAYS);
 		
-		// ¼­¹ö¿¡ ipÁÖ¼Ò°¡ µé¾î°¥ ¼ö ÀÖµµ·Ï
+		// ì„œë²„ì— ipì£¼ì†Œê°€ ë“¤ì–´ê°ˆ ìˆ˜ ìˆë„ë¡
 		TextField IPText = new TextField("127.0.0.1");
 		TextField portText = new TextField("9876");
 		portText.setPrefWidth(80);
@@ -137,7 +137,7 @@ public class Main extends Application {
 			input.requestFocus();
 		});
 		
-		Button sendButton = new Button("º¸³»±â");
+		Button sendButton = new Button("ë³´ë‚´ê¸°");
 		sendButton.setDisable(false);
 		
 		sendButton.setOnAction(event -> {
@@ -146,9 +146,9 @@ public class Main extends Application {
 			input.requestFocus();
 		});
 		
-		Button connectionButton = new Button("Á¢¼ÓÇÏ±â");
+		Button connectionButton = new Button("ì ‘ì†í•˜ê¸°");
 		connectionButton.setOnAction(event -> {
-			if(connectionButton.getText().equals("Á¢¼ÓÇÏ±â")) {
+			if(connectionButton.getText().equals("ì ‘ì†í•˜ê¸°")) {
 				int port = 9876;
 				
 				try {
@@ -159,19 +159,19 @@ public class Main extends Application {
 				
 				startClient(IPText.getText(), port);
 				Platform.runLater(() -> {
-					textArea.appendText("[Ã¤ÆÃ¹æÁ¢¼Ó]\n");
+					textArea.appendText("[ì±„íŒ…ë°©ì ‘ì†]\n");
 				});
 				
-				connectionButton.setText("Á¾·áÇÏ±â");
+				connectionButton.setText("ì¢…ë£Œí•˜ê¸°");
 				input.setDisable(false);
 				input.requestFocus();
 			} else {
 				stopClient();
 				Platform.runLater(() -> {
-					textArea.appendText("[Ã¤ÆÃ¹æ ÅğÀå]");
+					textArea.appendText("[ì±„íŒ…ë°© í‡´ì¥]");
 				});
 				
-				connectionButton.setText("Á¢¼ÓÇÏ±â");
+				connectionButton.setText("ì ‘ì†í•˜ê¸°");
 				input.setDisable(true);
 				sendButton.setDisable(true);
 			}
@@ -185,7 +185,7 @@ public class Main extends Application {
 		root.setBottom(pane);
 		Scene scene = new Scene(root, 500, 500);
 		
-		primaryStage.setTitle(" [Ã¤ÆÃ Å¬¶óÀÌ¾ğÆ®] ");
+		primaryStage.setTitle(" [ì±„íŒ… í´ë¼ì´ì–¸íŠ¸] ");
 		primaryStage.setScene(scene);
 		primaryStage.setOnCloseRequest(event -> stopClient());
 		primaryStage.show();
@@ -193,7 +193,7 @@ public class Main extends Application {
 		connectionButton.requestFocus();
 	}
 	
-	// ÇÁ·Î±×·¥ÀÇ ¸ŞÀÎ ¸Ş¼­µå
+	// í”„ë¡œê·¸ë¨ì˜ ë©”ì¸ ë©”ì„œë“œ
 	public static void main(String[] args) {
 		launch(args);
 	}
