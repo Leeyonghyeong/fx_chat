@@ -18,7 +18,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-// test
 public class Main extends Application {
 	
 	// 스레드 풀 사용(한정된 자원으로 안정적이게 서버를 운용하기 위해서 threadPool 기법을 사용)
